@@ -9,7 +9,9 @@ var object1 = {
   transform3: convertToSentenceCase,
   transform4: straightenMSO,
   transform5: SpanishChars,
-  transform7: SpecialChars
+  transform6: supLegal,
+  transform7: SpecialChars,
+  transform8: RemoveSpace,
 };
   
 //Triggered when user presses the convert button
@@ -88,6 +90,7 @@ function straightenMSO() {
 	var straightMSO = convertedBox.value
 	convertedBox.value = straightMSO.replace(RegExp("\u201D", "g"), '"').replace(RegExp("\u201C", "g"), '"').replace(RegExp("\u2018", "g"), "'");
 }
+
 
 //Special character library
 var objectSpecialChars = {
@@ -170,3 +173,15 @@ function SpanishChars(){
 	});
 	convertedBox.value = SpanishChar;
 }
+
+function supLegal(){
+	//var supLegal = convertedBox.value;
+	//supLegal = supLegal.replace(RegExp('©', "g"), '<sup>&copy;</sup>');
+	//convertedBox.value = supLegal;
+	}
+function RemoveSpace(){
+	var RemoveSpace = convertedBox.value
+	RemoveSpace = RemoveSpace.replace(RegExp('\n', "g"), '');
+
+	convertedBox.value = RemoveSpace;
+}	
