@@ -12,6 +12,8 @@ var object1 = {
   transform6: supLegal,
   transform7: SpecialChars,
   transform8: RemoveSpace,
+  transform9: addlineReturn,
+  transform10: spanLegal, 
 };
   
 //Triggered when user presses the convert button
@@ -125,8 +127,6 @@ var objectSpecialChars = {
 	'\u00A3':'&pound;',
 	'\u00A5':'&yen;',
 	'\u00A2':'&cent;',
-	'\u003C':'&lt;',
-	'\u003E':'&gt;',
 	'\u2018':'&lsquo;'
   };
 
@@ -175,13 +175,25 @@ function SpanishChars(){
 }
 
 function supLegal(){
-	//var supLegal = convertedBox.value;
-	//supLegal = supLegal.replace(RegExp('©', "g"), '<sup>&copy;</sup>');
-	//convertedBox.value = supLegal;
+	var supLegal = convertedBox.value;
+	supLegal = supLegal.replace(RegExp('\u00A9', "g"), '<sup>&copy;</sup>').replace(RegExp('\u00AE', "g"), '<sup>&reg;</sup>').replace(RegExp('\u2122', "g"), '<sup>&trade;</sup>');
+	convertedBox.value = supLegal;
 	}
 function RemoveSpace(){
 	var RemoveSpace = convertedBox.value
 	RemoveSpace = RemoveSpace.replace(RegExp('\n', "g"), '');
 
 	convertedBox.value = RemoveSpace;
-}	
+}
+
+function addlineReturn(){
+	var RemoveSpace = convertedBox.value
+	RemoveSpace = RemoveSpace.replace(RegExp('\n', "g"), '<br>');
+
+	convertedBox.value = RemoveSpace;
+}
+function spanLegal(){
+	var spanLegal = convertedBox.value;
+	spanLegal = spanLegal.replace(RegExp('\u00A9', "g"), '<span style="font-size:70%;line-height:0;vertical-align:3px;">&copy;</span>').replace(RegExp('\u00AE', "g"), '<span style="font-size:70%;line-height:0;vertical-align:3px;">&reg;</span>').replace(RegExp('\u2122', "g"), '<span style="font-size:70%;line-height:0;vertical-align:3px;">&trade;</span>');
+	convertedBox.value = spanLegal;
+	}
