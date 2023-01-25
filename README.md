@@ -1,1 +1,0 @@
-# Unicoder - Is designed to assist email coders/developers/specialist. It's purpose is to remove unwanted characters and refrormat excessive line returns copied over from PDFs, PSDS and Microsoft programs.  
