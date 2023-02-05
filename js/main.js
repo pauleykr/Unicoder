@@ -13,7 +13,9 @@ var object1 = {
   transform7: SpecialChars,
   transform8: RemoveSpace,
   transform9: addlineReturn,
-  transform10: spanLegal, 
+  transform10: spanLegal,
+  transform11: Links,
+  transform12: hyperLink
 };
   
 //Triggered when user presses the convert button
@@ -197,3 +199,37 @@ function spanLegal(){
 	spanLegal = spanLegal.replace(RegExp('\u00A9', "g"), '<span style="font-size:70%;line-height:0;vertical-align:3px;">&copy;</span>').replace(RegExp('\u00AE', "g"), '<span style="font-size:70%;line-height:0;vertical-align:3px;">&reg;</span>').replace(RegExp('\u2122', "g"), '<span style="font-size:70%;line-height:0;vertical-align:3px;">&trade;</span>');
 	convertedBox.value = spanLegal;
 	}
+function Links(){
+	var Links = convertedBox.value;
+	var RegexNumbers = /((\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$)/g;
+
+	//grab input values
+	var className = document.getElementById('className');
+	var ColorHex = document.getElementById('ColorHex');
+
+	var classNameValue = className.value;
+	var ColorHexValue = ColorHex.value;
+
+
+	Links = Links.replace(RegexNumbers, "<span class=\""+classNameValue+"\"><a style=\"color:#"+ColorHexValue+";text-decoration:none;\">$1</a></span>");
+	convertedBox.value = Links;
+}
+function hyperLink(){
+	//Grab main textarea value
+	var inputValueTextFinal = convertedBox.value;
+
+	//Grab text value from the input box
+	var hyperLinkText = document.getElementById('hyperLinkText');
+	var inputValue = hyperLinkText.value;
+	
+	//Grab desired color
+	var ColorHex2 = document.getElementById('ColorHex2');
+	var ColorHex2Output = ColorHex2.value;	
+
+	//check if there is a value in hyperlink box if not don't display a tag
+	if (inputValue.length>1){
+		inputValueTextFinal = inputValueTextFinal.replace(inputValue, "<a style=\"color:#"+ColorHex2Output+";text-decoration:none;\">"+inputValue+"</a>");
+
+		convertedBox.value = inputValueTextFinal;
+	}
+}
