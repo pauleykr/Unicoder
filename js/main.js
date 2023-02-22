@@ -2,8 +2,6 @@
 var textBox = document.getElementById("OriginalText");
 var convertedBox = document.getElementById("ConvertedText");
 
-
-
 function copy(){
   alert("hello");
 }
@@ -35,7 +33,7 @@ var object1 = {
   transform9: addlineReturn,
   transform10: spanLegal,
   transform11: Links,
-  transform12: hyperLink,
+  transform12: hyperLink
 };
 
 //Triggered when user presses the convert button
@@ -113,6 +111,8 @@ function straightenMSO() {
   convertedBox.value = straightMSO
     .replace(RegExp("\u201D", "g"), '"')
     .replace(RegExp("\u201C", "g"), '"')
+    .replace(RegExp("\u02BC", "g"), "'")
+    .replace(RegExp("\u2019", "g"), "'")
     .replace(RegExp("\u2018", "g"), "'");
 }
 
