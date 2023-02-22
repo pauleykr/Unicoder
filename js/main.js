@@ -2,24 +2,31 @@
 var textBox = document.getElementById("OriginalText");
 var convertedBox = document.getElementById("ConvertedText");
 
-function copy(){
+function copy() {
   alert("hello");
 }
 
 //Set checkbox options to display
 
-/*
-function showLinkCheckbox() {
-	//var k = document.getElementsByClassName('hidelink').length;
+/*Notes 
+Switch to class method. Because the ID is being changed document.getelementbyid is looking for hyperlink-hide but it can no longer find it because it no longer exist because the ID has been changed.
 
-	//document.getElementsByClassName("hidelink").innerHTML = value;
-	
-	//document.getElementsByClassName("hidelink").classList.add('show');
-	//document.getElementsByClassName("hidelink").classList.remove('hidelink');
-	
-	//console.log(k);
-  }
 */
+function showLinkCheckbox(displayId) {
+  var k = document.getElementById("hyperlink-hide");
+  console.log(k.id)
+  if (k.id == "hyperlink-hide") {
+    k.id = "hyperlink-display";
+  } else if (k.id == "hyperlink-display") {
+    k.id = "hyperlink-hide";
+  }
+}
+
+function showunLinkheckbox(displayId) {
+  var k = document.getElementById("unlink-hide");
+  k.id = "unlink-display";
+}
+
 //Setting up object that corresponds to radio buttons
 var object1 = {
   transform1: lowerCase,
@@ -34,16 +41,16 @@ var object1 = {
   transform10: spanLegal,
   transform11: Links,
   transform12: hyperLink,
-  transform15: NoTransform
+  transform15: NoTransform,
 };
 
 //Triggered when user presses the convert button
 function ConversionTrigger() {
   var checked = check();
 
-  checked.forEach(optId => {
+  checked.forEach((optId) => {
     //object1['transform1']()
-    console.log('optId = ', optId);
+    console.log("optId = ", optId);
     object1[optId]();
   });
 }
@@ -75,7 +82,7 @@ function check() {
 }
 
 //No change to text casing
-function NoTransform(){
+function NoTransform() {
   var x = textBox.value;
   convertedBox.value = x;
 }
@@ -260,7 +267,7 @@ function Links() {
   );
   convertedBox.value = Links;
 }
- 
+
 function hyperLink() {
   //Grab main textarea value
   var inputValueTextFinal = convertedBox.value;
@@ -272,7 +279,6 @@ function hyperLink() {
   //Grab desired color
   var ColorHex2 = document.getElementById("ColorHex2");
   var ColorHex2Output = ColorHex2.value;
-
 
   //check if there is a value in hyperlink box if not don't display a tag
   if (inputValue.length > 1) {
@@ -287,5 +293,4 @@ function hyperLink() {
 
     convertedBox.value = inputValueTextFinal;
   }
-  
 }
