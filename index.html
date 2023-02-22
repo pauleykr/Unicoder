@@ -1,54 +1,75 @@
 <html>
+
 <head>
-<title>Unicoder</title>
-<link rel="icon" type="image/png" href="images/Uni_favicon.png">
-<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>Unicoder</title>
+	<link rel="icon" type="image/png" href="images/Uni_favicon.png">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
-<h1><img src="images/icon_Uni.png" class="icon" alt="icon" width="70" height="auto">Unicoder</h1>
-<div class="containerL">
-	<textarea type="text" id="OriginalText"></textarea>
-	<textarea type="text" id="ConvertedText"></textarea>
-</div>
-<div class="containerR">
-	<button type="button" onclick="ConversionTrigger()">Convert</button>
-	<button type="button" onclick="copy()">Copy</button>
+	<h1><img src="images/icon_Uni.png" class="icon" alt="icon" width="70" height="auto">Unicoder</h1>
+	<div class="containerL">
+		<textarea type="text" id="OriginalText"></textarea>
+		<textarea type="text" id="ConvertedText"></textarea>
+	</div>
+	<div class="containerR">
+		<button type="button" onclick="ConversionTrigger()">Convert</button>
+		<button type="button" onclick="copy()">Copy</button>
 		<ul>
-		<h4>Text Casing</h4>
-		<li><input type="radio" id="transform1" name="transform" value="lowerCase"><label for="transform1">lowerCase</label></li>
-		<li><input type="radio" id="transform2" name="transform" value="upperCase"><label for="transform2">upperCase</label></li>
-		<li><input type="radio" id="transform3" name="transform" value="transform3" checked><label for="transform3">properCase</label></li>
+			<h4>Text Casing</h4>
+			<li><input type="radio" id="transform1" name="transform" value="lowerCase"><label
+					for="transform1">lowerCase</label></li>
+			<li><input type="radio" id="transform2" name="transform" value="upperCase"><label
+					for="transform2">upperCase</label></li>
+			<li><input type="radio" id="transform3" name="transform" value="properCase" checked><label
+					for="transform3">properCase</label></li>
+					<!--<li><input type="radio" id="NoTransform" name="transform" value="NoTransform" checked><label
+						for="transform3">No Change</label></li>-->
 		</ul>
 		<ul>
-		<h4>Unicode to HTML</h4>
-		<li><input type="checkbox" id="transform4" name="transform4" value="MSO"><label for="transform4">Straighten MSO</label></li>
-		<li><input type="checkbox" id="transform5" name="transform5" value="spanishChar"><label for="transform5">Spanish Characters</label></li>
-		<li><input type="checkbox" id="transform6" name="transform6" value="Infringment"><label for="transform6">Superscript Legal Chars</label></li>
-		<li><input type="checkbox" id="transform7" name="transform7" value="Infringment"><label for="transform7">Common Special Chars</label></li>
+			<h4>Unicode to HTML</h4>
+			<li><input type="checkbox" id="transform4" name="transform4" value="MSO"><label for="transform4">Straighten
+					MSO</label></li>
+			<li><input type="checkbox" id="transform5" name="transform5" value="spanishChar"><label
+					for="transform5">Spanish Characters</label></li>
+			<li><input type="checkbox" id="transform6" name="transform6" value="Infringment"><label
+					for="transform6">Superscript Legal Chars</label></li>
+			<li><input type="checkbox" id="transform7" name="transform7" value="Infringment"><label
+					for="transform7">Common Special Chars</label></li>
 		</ul>
 		<ul>
-		<h4>Strip line returns</h4>
-		<li><input type="checkbox" id="transform8" name="transform8" value="RemoveLn"><label for="transform8">Strip Line Returns</label></li>
+			<h4>Strip line returns</h4>
+			<li><input type="checkbox" id="transform8" name="transform8" value="RemoveLn"><label for="transform8">Strip
+					Line Returns</label></li>
 		</ul>
 		<ul>
-		<h4>Email Coding</h4>
-		<li><input type="checkbox" id="transform9" name="transform9" value="RemoveLn"><label for="transform9">Add &lt;br&gt;</label></li>
-		<li><input type="checkbox" id="transform10" name="transform10" value="Infringment"><label for="transform10">Superscript Legal Chars</label></li>
-		<li><input type="checkbox" id="transform11" name="transform11" value="links"><label for="transform11">Unlink Address/telephone</label></li>
-		<ul>
-		<li>Class: <input type="text" class="inputstyle" id="className" name="className" required maxlength="8" size="20"></li>
-		<li>Color: <input type="text" class="inputstyle" id="ColorHex" name="ColorHex" required maxlength="8" size="20"></li>
-		<li><input type="checkbox" id="transform12" name="transform12" value="Hyperlink"><label for="transform12">Hyperlink</label></li>
-		<ul>
-		<li>Hyperlink: <input type="text" class="inputstyle" id="hyperLinkText" name="hyperLinkText" maxlength="8" size="20"></li>
-		<li>Color: <input type="text" class="inputstyle" id="ColorHex2" name="ColorHex2" maxlength="8" size="20"></li>
-		
-		<!--<li><input type="radio" id="transform13" name="transform13" value="transform13"><label for="transform13">underline</label></li>
-		<li><input type="radio" id="transform14" name="transform14" value="transform14" checked><label for="transform14">no undeline</label></li>-->
+			<h4>Email Coding</h4>
+			<li><input type="checkbox" id="transform9" name="transform9" value="RemoveLn"><label for="transform9">Add
+					&lt;br&gt;</label></li>
+			<li><input type="checkbox" id="transform10" name="transform10" value="Infringment"><label
+					for="transform10">Superscript Legal Chars</label></li>
+			<li><input type="checkbox" id="transform11" name="transform11" value="links"><label for="transform11">Unlink
+					Address/telephone</label></li>
+			<ul class="">
+				<li>Class: <input type="text" class="inputstyle" id="className" name="className" required maxlength="8"
+						size="20"></li>
+				<li>Color: <input type="text" class="inputstyle" id="ColorHex" name="ColorHex" required maxlength="8"
+						size="20"></li>
+			</ul>
+			<li><input onclick="showLinkCheckbox()" type="checkbox" id="transform12" name="transform12" value="Hyperlink"><label
+				for="transform12">Hyperlink</label></li>
+			<ul class="">
+			<li>Hyperlink: <input type="text" class="inputstyle" id="hyperLinkText" name="hyperLinkText"
+						maxlength="8" size="20"></li>
+				<li>Color: <input type="text" class="inputstyle" id="ColorHex2" name="ColorHex2" maxlength="8"
+						size="20"></li>
+
+				<input type="radio" id="transform13" name="transform13" value="transform13"><label for="transform13">underline</label></li>
+		<!--<li><input type="radio" id="transform14" name="transform14" value="transform14" checked><label for="transform14">no undeline</label></li>-->	
+			</ul>
 		</ul>
-		</ul>
-</div>
+	</div>
 </body>
 <script src="js/main.js"></script>
+
 </html>
