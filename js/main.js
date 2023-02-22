@@ -33,7 +33,8 @@ var object1 = {
   transform9: addlineReturn,
   transform10: spanLegal,
   transform11: Links,
-  transform12: hyperLink
+  transform12: hyperLink,
+  transform15: NoTransform
 };
 
 //Triggered when user presses the convert button
@@ -71,6 +72,12 @@ function check() {
     i++;
   }
   return StoreCheckStatus;
+}
+
+//No change to text casing
+function NoTransform(){
+  var x = textBox.value;
+  convertedBox.value = x;
 }
 
 //Lower case the word casing of the inputed value
