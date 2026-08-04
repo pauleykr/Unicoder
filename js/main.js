@@ -57,6 +57,11 @@ function ConversionTrigger() {
     reportBox.textContent = "";
   }
 
+  var warningBox = document.getElementById("colorHex2Warning");
+  if (warningBox) {
+    warningBox.textContent = "";
+  }
+
   checked.forEach((optId) => {
     //object1['transform1']()
     console.log("optId = ", optId);
@@ -368,6 +373,13 @@ function Links() {
   convertedBox.value = Links;
 }
 
+//Matches 3/6/8-digit hex color values, with or without a leading #
+function isValidHexColor(value) {
+  return /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/.test(
+    value.trim()
+  );
+}
+
 function hyperLink() {
   //Grab main textarea value
   var inputValueTextFinal = convertedBox.value;
@@ -376,15 +388,23 @@ function hyperLink() {
   var hyperLinkText = document.getElementById("hyperLinkText");
   var inputValue = hyperLinkText.value;
 
-  //Grab desired color
+  //Grab desired color (strip a leading # since it's prepended below)
   var ColorHex2 = document.getElementById("ColorHex2");
-  var ColorHex2Output = ColorHex2.value;
+  var ColorHex2Output = ColorHex2.value.replace(/^#/, "");
+
+  var warningBox = document.getElementById("colorHex2Warning");
+  if (warningBox) {
+    warningBox.textContent =
+      ColorHex2Output.length > 0 && !isValidHexColor(ColorHex2Output)
+        ? "Hex color is most compatible for email."
+        : "";
+  }
 
   //check if there is a value in hyperlink box if not don't display a tag
   if (inputValue.length > 1) {
     inputValueTextFinal = inputValueTextFinal.replace(
       inputValue,
-      '<a style="color:#' +
+      '<a href="" style="color:#' +
         ColorHex2Output +
         ';text-decoration:none;">' +
         inputValue +
