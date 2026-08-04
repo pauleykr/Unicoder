@@ -87,3 +87,8 @@ button {
 #unlink-display{
   display: block;
 }
+#junkReport {
+  color: #57e37e;
+  font-size: 0.85em;
+  min-height: 1.2em;
+}

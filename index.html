@@ -11,6 +11,7 @@
 	<div class="containerL">
 		<textarea type="text" id="OriginalText"></textarea>
 		<textarea type="text" id="ConvertedText"></textarea>
+		<div id="junkReport"></div>
 	</div>
 	<div class="containerR">
 		<button type="button" onclick="ConversionTrigger()">Convert</button>
@@ -35,7 +36,12 @@
 			<li><input type="checkbox" id="transform6" name="transform6" value="Infringment"><label
 					for="transform6">Superscript Legal Chars</label></li>
 			<li><input type="checkbox" id="transform7" name="transform7" value="Infringment"><label
-					for="transform7">Common Special Chars</label></li>
+					for="transform7">Legal Chars &amp; Bullets to HTML (No Superscript)</label></li>
+		</ul>
+		<ul>
+			<h4>Cleanup</h4>
+			<li><input type="checkbox" id="transform16" name="transform16" value="junk"><label
+					for="transform16">Remove Junk Characters</label></li>
 		</ul>
 		<ul>
 			<h4>Strip line returns</h4>

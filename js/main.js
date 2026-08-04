@@ -42,11 +42,17 @@ var object1 = {
   transform11: Links,
   transform12: hyperLink,
   transform15: NoTransform,
+  transform16: removeJunkChars,
 };
 
 //Triggered when user presses the convert button
 function ConversionTrigger() {
   var checked = check();
+
+  var reportBox = document.getElementById("junkReport");
+  if (reportBox) {
+    reportBox.textContent = "";
+  }
 
   checked.forEach((optId) => {
     //object1['transform1']()
@@ -176,6 +182,73 @@ function SpecialChars() {
     SpecialChar = SpecialChar.replace(RegExp(unicode, "g"), htmlChar);
   });
   convertedBox.value = SpecialChar;
+}
+
+//Codepoint ranges for invisible/junk characters commonly injected by apps
+//like Photoshop (private-use-area glyph substitutions), rich text editors
+//(zero-width joiners, BOMs), and stray control characters from copy/paste.
+var junkCharRanges = [
+  [0x0000, 0x0008],
+  [0x000b, 0x000c],
+  [0x000e, 0x001f],
+  [0x007f, 0x007f],
+  [0x00ad, 0x00ad],
+  [0x200b, 0x200f],
+  [0x2028, 0x202e],
+  [0x2060, 0x2064],
+  [0xe000, 0xf8ff],
+  [0xfeff, 0xfeff],
+  [0xfff9, 0xfffb],
+  [0xfffd, 0xfffd],
+  [0xf0000, 0xffffd],
+  [0x100000, 0x10fffd],
+];
+
+function isJunkChar(codePoint) {
+  return junkCharRanges.some(
+    ([start, end]) => codePoint >= start && codePoint <= end
+  );
+}
+
+//Strips junk characters from the converted text and reports what was removed
+function removeJunkChars() {
+  var input = convertedBox.value;
+  var removedCounts = {};
+  var output = "";
+
+  for (var chr of input) {
+    var codePoint = chr.codePointAt(0);
+    if (isJunkChar(codePoint)) {
+      var key = "U+" + codePoint.toString(16).toUpperCase().padStart(4, "0");
+      removedCounts[key] = (removedCounts[key] || 0) + 1;
+    } else {
+      output += chr;
+    }
+  }
+
+  convertedBox.value = output;
+  reportJunkRemoved(removedCounts);
+}
+
+//Displays a summary of removed junk characters near the textareas
+function reportJunkRemoved(removedCounts) {
+  var reportBox = document.getElementById("junkReport");
+  if (!reportBox) {
+    return;
+  }
+
+  var keys = Object.keys(removedCounts);
+  if (keys.length === 0) {
+    reportBox.textContent = "No junk characters found.";
+    return;
+  }
+
+  var total = keys.reduce((sum, key) => sum + removedCounts[key], 0);
+  var details = keys
+    .map((key) => key + " (×" + removedCounts[key] + ")")
+    .join(", ");
+  reportBox.textContent =
+    "Removed " + total + " junk character(s): " + details;
 }
 
 //Spanish Special character library
