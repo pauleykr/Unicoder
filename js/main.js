@@ -43,6 +43,7 @@ var object1 = {
   transform12: hyperLink,
   transform15: NoTransform,
   transform16: removeJunkChars,
+  transform17: NoSupLegal,
 };
 
 //Triggered when user presses the convert button
@@ -77,7 +78,9 @@ function orderTransforms(checked) {
 //Grab all checkboxs and radio buttons
 function check() {
   var boxCheck = document.querySelectorAll("input[type='checkbox']");
-  var radioCheck = document.querySelectorAll("input[type='radio'][name='transform']");
+  var radioCheck = document.querySelectorAll(
+    "input[type='radio'][name='transform'], input[type='radio'][name='supLegalFormat']"
+  );
   var i = 0;
   var StoreCheckStatus = [];
 
@@ -292,6 +295,9 @@ function SpanishChars() {
   });
   convertedBox.value = SpanishChar;
 }
+
+//N/A option for the Superscript Legal Chars radio group - no formatting applied
+function NoSupLegal() {}
 
 function supLegal() {
   var supLegal = convertedBox.value;
