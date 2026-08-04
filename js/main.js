@@ -127,7 +127,6 @@ function straightenMSO() {
     .replace(RegExp("\u201C", "g"), '"')
     .replace(RegExp("\u02BC", "g"), "'")
     .replace(RegExp("\u2019", "g"), "'")
-    .replace(RegExp(" ", "g"), "'")
     .replace(RegExp("\u2018", "g"), "'");
 }
 
