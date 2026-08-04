@@ -72,26 +72,43 @@
 			<li><input onclick="showLinkCheckbox('hyperlink-hide')" type="checkbox" id="transform12" name="transform12"
 					value="Hyperlink"><label for="transform12">Select Text to Hyperlink</label></li>
 			<ul id="hyperlink-hide">
-				<li>Hyperlink 1: <input type="text" class="inputstyle" id="hyperLinkText1" name="hyperLinkText1"
-						maxlength="8" size="20">
-					Color 1: <input type="text" class="inputstyle" id="ColorHex2_1" name="ColorHex2_1" maxlength="8"
-						size="20"></li>
-				<li>Hyperlink 2: <input type="text" class="inputstyle" id="hyperLinkText2" name="hyperLinkText2"
-						maxlength="8" size="20">
-					Color 2: <input type="text" class="inputstyle" id="ColorHex2_2" name="ColorHex2_2" maxlength="8"
-						size="20"></li>
-				<li>Hyperlink 3: <input type="text" class="inputstyle" id="hyperLinkText3" name="hyperLinkText3"
-						maxlength="8" size="20">
-					Color 3: <input type="text" class="inputstyle" id="ColorHex2_3" name="ColorHex2_3" maxlength="8"
-						size="20"></li>
-				<li>Hyperlink 4: <input type="text" class="inputstyle" id="hyperLinkText4" name="hyperLinkText4"
-						maxlength="8" size="20">
-					Color 4: <input type="text" class="inputstyle" id="ColorHex2_4" name="ColorHex2_4" maxlength="8"
-						size="20"></li>
-				<li>Hyperlink 5: <input type="text" class="inputstyle" id="hyperLinkText5" name="hyperLinkText5"
-						maxlength="8" size="20">
-					Color 5: <input type="text" class="inputstyle" id="ColorHex2_5" name="ColorHex2_5" maxlength="8"
-						size="20"></li>
+				<li class="hyperlink-row" id="hyperlinkRow1">
+					<span class="row-label">Hyperlink 1:</span>
+					<input type="text" class="inputstyle" id="hyperLinkText1" name="hyperLinkText1" maxlength="8"
+						size="20">
+					<span class="row-label">Color 1:</span>
+					<input type="text" class="inputstyle" id="ColorHex2_1" name="ColorHex2_1" maxlength="8" size="20">
+				</li>
+				<li class="hyperlink-row hyperlink-row-hidden" id="hyperlinkRow2">
+					<span class="row-label">Hyperlink 2:</span>
+					<input type="text" class="inputstyle" id="hyperLinkText2" name="hyperLinkText2" maxlength="8"
+						size="20">
+					<span class="row-label">Color 2:</span>
+					<input type="text" class="inputstyle" id="ColorHex2_2" name="ColorHex2_2" maxlength="8" size="20">
+				</li>
+				<li class="hyperlink-row hyperlink-row-hidden" id="hyperlinkRow3">
+					<span class="row-label">Hyperlink 3:</span>
+					<input type="text" class="inputstyle" id="hyperLinkText3" name="hyperLinkText3" maxlength="8"
+						size="20">
+					<span class="row-label">Color 3:</span>
+					<input type="text" class="inputstyle" id="ColorHex2_3" name="ColorHex2_3" maxlength="8" size="20">
+				</li>
+				<li class="hyperlink-row hyperlink-row-hidden" id="hyperlinkRow4">
+					<span class="row-label">Hyperlink 4:</span>
+					<input type="text" class="inputstyle" id="hyperLinkText4" name="hyperLinkText4" maxlength="8"
+						size="20">
+					<span class="row-label">Color 4:</span>
+					<input type="text" class="inputstyle" id="ColorHex2_4" name="ColorHex2_4" maxlength="8" size="20">
+				</li>
+				<li class="hyperlink-row hyperlink-row-hidden" id="hyperlinkRow5">
+					<span class="row-label">Hyperlink 5:</span>
+					<input type="text" class="inputstyle" id="hyperLinkText5" name="hyperLinkText5" maxlength="8"
+						size="20">
+					<span class="row-label">Color 5:</span>
+					<input type="text" class="inputstyle" id="ColorHex2_5" name="ColorHex2_5" maxlength="8" size="20">
+				</li>
+				<li><button type="button" id="addHyperlinkBtn" class="add-btn" onclick="addHyperlinkRow()"
+						title="Add another hyperlink (up to 5)">+</button></li>
 				<li id="colorHex2Warning" class="warning-text"></li>
 				Select whether to underline or not
 				<input type="radio" id="transform13" name="transform13" value="transform13"><label

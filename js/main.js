@@ -380,9 +380,30 @@ function isValidHexColor(value) {
   );
 }
 
-//Fixed set of hyperlink slots (rather than an "add another" button) so the
-//number of links processed per convert is always bounded.
+//Fixed set of 5 hyperlink slots already exist in the DOM (rows 2-5 start
+//hidden); the "+" button just reveals the next one rather than creating new
+//elements, so the number of links processed per convert stays bounded.
 var MAX_HYPERLINKS = 5;
+var nextHyperlinkSlot = 2;
+
+function addHyperlinkRow() {
+  if (nextHyperlinkSlot > MAX_HYPERLINKS) {
+    return;
+  }
+
+  var row = document.getElementById("hyperlinkRow" + nextHyperlinkSlot);
+  if (row) {
+    row.classList.remove("hyperlink-row-hidden");
+  }
+  nextHyperlinkSlot++;
+
+  if (nextHyperlinkSlot > MAX_HYPERLINKS) {
+    var addBtn = document.getElementById("addHyperlinkBtn");
+    if (addBtn) {
+      addBtn.style.display = "none";
+    }
+  }
+}
 
 function hyperLink() {
   //Grab main textarea value
