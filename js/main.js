@@ -64,7 +64,7 @@ function ConversionTrigger() {
 //Grab all checkboxs and radio buttons
 function check() {
   var boxCheck = document.querySelectorAll("input[type='checkbox']");
-  var radioCheck = document.querySelectorAll("input[type='radio']");
+  var radioCheck = document.querySelectorAll("input[type='radio'][name='transform']");
   var i = 0;
   var StoreCheckStatus = [];
 
