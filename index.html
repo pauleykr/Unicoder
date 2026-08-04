@@ -61,21 +61,49 @@
 			<h4>Text Markups</h4>
 
 			<li><input onclick="showunLinkheckbox('unlink-hide')" type="checkbox" id="transform11" name="transform11"
-					value="links"><label for="transform11">Unlink
-					Address/telephone</label></li>
+					value="links"><label for="transform11">Prevent client auto-linking for
+					address/telephone</label>
+				<span class="tooltip-wrap">
+					<button type="button" class="info-icon" aria-label="Why prevent auto-linking?"
+						aria-describedby="unlinkTooltip" aria-expanded="false" onclick="toggleTooltip(this)">i</button>
+					<span class="tooltip-text" id="unlinkTooltip" role="tooltip">Email clients auto-link
+						addresses and phone numbers using their own inline styles, which can override module/template
+						styles(css) causing accessibility (ADA) issues and/or an inconsistent, unpolished rendering.
+						This wraps them in a styled span/link instead so the client won't auto-link them.</span>
+				</span>
+			</li>
 			<ul id="unlink-hide">
 				<li>Class: <input type="text" class="inputstyle" id="className" name="className" required maxlength="8"
-						size="20"></li>
+						size="20">
+					<span class="tooltip-wrap">
+						<button type="button" class="info-icon" aria-label="What is this class for?"
+							aria-describedby="classNameTooltip" aria-expanded="false" onclick="toggleTooltip(this)">i</button>
+						<span class="tooltip-text" id="classNameTooltip" role="tooltip">This should match a CSS class
+							defined in a &lt;style&gt; block in the email's &lt;head&gt;. Email clients often apply
+							their own styling when auto-linking addresses/phone numbers, overriding inline styles -
+							a head-defined class lets your own styles win instead.</span>
+					</span>
+				</li>
 				<li>Color: <input type="text" class="inputstyle" id="ColorHex" name="ColorHex" required maxlength="8"
 						size="20"></li>
 			</ul>
 			<li><input onclick="showLinkCheckbox(this)" type="checkbox" id="transform12" name="transform12"
-					value="Hyperlink"><label for="transform12">Select Text to Link</label></li>
+					value="Hyperlink"><label for="transform12">Select Text to Link</label>
+				<span class="tooltip-wrap">
+					<button type="button" class="info-icon" aria-label="What are Link and Color for?"
+						aria-describedby="hyperlinkTooltip" aria-expanded="false" onclick="toggleTooltip(this)">i</button>
+					<span class="tooltip-text" id="hyperlinkTooltip" role="tooltip">Link 1-5: enter the exact text
+						being linked - it must match the text as it appears above, and each will become its own
+						hyperlink. Color: sets that link's color as an inline style, since email clients often
+						strip or override a plain &lt;a&gt; tag's styling - keeping it inline ensures the color
+						is kept.</span>
+				</span>
+			</li>
 			<ul id="hyperlinkFields" class="hyperlink-hide">
 				<li class="hyperlink-row" id="hyperlinkRow1">
 					<span class="row-label">Link 1:</span>
 					<input type="text" class="inputstyle" id="hyperLinkText1" name="hyperLinkText1" maxlength="8"
-						size="20">
+						size="20" placeholder="text being linked">
 					<span class="row-label">Color 1:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_1" name="ColorHex2_1" maxlength="8" size="20">
 					<span class="underline-row">
@@ -91,7 +119,7 @@
 						title="Remove this link">&minus;</button>
 					<span class="row-label">Link 2:</span>
 					<input type="text" class="inputstyle" id="hyperLinkText2" name="hyperLinkText2" maxlength="8"
-						size="20">
+						size="20" placeholder="text being linked">
 					<span class="row-label">Color 2:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_2" name="ColorHex2_2" maxlength="8" size="20">
 					<span class="underline-row">
@@ -107,7 +135,7 @@
 						title="Remove this link">&minus;</button>
 					<span class="row-label">Link 3:</span>
 					<input type="text" class="inputstyle" id="hyperLinkText3" name="hyperLinkText3" maxlength="8"
-						size="20">
+						size="20" placeholder="text being linked">
 					<span class="row-label">Color 3:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_3" name="ColorHex2_3" maxlength="8" size="20">
 					<span class="underline-row">
@@ -123,7 +151,7 @@
 						title="Remove this link">&minus;</button>
 					<span class="row-label">Link 4:</span>
 					<input type="text" class="inputstyle" id="hyperLinkText4" name="hyperLinkText4" maxlength="8"
-						size="20">
+						size="20" placeholder="text being linked">
 					<span class="row-label">Color 4:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_4" name="ColorHex2_4" maxlength="8" size="20">
 					<span class="underline-row">
@@ -139,7 +167,7 @@
 						title="Remove this link">&minus;</button>
 					<span class="row-label">Link 5:</span>
 					<input type="text" class="inputstyle" id="hyperLinkText5" name="hyperLinkText5" maxlength="8"
-						size="20">
+						size="20" placeholder="text being linked">
 					<span class="row-label">Color 5:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_5" name="ColorHex2_5" maxlength="8" size="20">
 					<span class="underline-row">

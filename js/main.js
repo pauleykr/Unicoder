@@ -19,6 +19,60 @@ function showunLinkheckbox(displayId) {
   k.id = "unlink-display";
 }
 
+//Tooltip icons: click/tap toggles the bubble open (hover still works via CSS,
+//this is what makes it reachable on touch devices and via keyboard).
+function toggleTooltip(button) {
+  var wrap = button.closest(".tooltip-wrap");
+  if (!wrap) {
+    return;
+  }
+  var isOpen = wrap.classList.toggle("tooltip-open");
+  button.setAttribute("aria-expanded", isOpen);
+  if (isOpen) {
+    positionTooltip(wrap);
+  }
+}
+
+//Flips the bubble to hug the right/top edge of its icon instead of the
+//left/bottom edge once the default placement would run off the viewport.
+function positionTooltip(wrap) {
+  wrap.classList.remove("tooltip-align-right", "tooltip-align-top");
+  var tooltip = wrap.querySelector(".tooltip-text");
+  if (!tooltip) {
+    return;
+  }
+  var rect = tooltip.getBoundingClientRect();
+  if (rect.right > window.innerWidth) {
+    wrap.classList.add("tooltip-align-right");
+  }
+  if (rect.bottom > window.innerHeight) {
+    wrap.classList.add("tooltip-align-top");
+  }
+}
+
+//Hover and keyboard focus reveal the tooltip purely via CSS, so reposition
+//on those events too (not just the click path above).
+document.querySelectorAll(".tooltip-wrap").forEach(function (wrap) {
+  wrap.addEventListener("mouseenter", function () {
+    positionTooltip(wrap);
+  });
+  wrap.addEventListener("focusin", function () {
+    positionTooltip(wrap);
+  });
+});
+
+document.addEventListener("click", function (event) {
+  document.querySelectorAll(".tooltip-wrap.tooltip-open").forEach(function (wrap) {
+    if (!wrap.contains(event.target)) {
+      wrap.classList.remove("tooltip-open");
+      var button = wrap.querySelector(".info-icon");
+      if (button) {
+        button.setAttribute("aria-expanded", "false");
+      }
+    }
+  });
+});
+
 //Setting up object that corresponds to radio buttons
 var object1 = {
   transform1: lowerCase,
@@ -342,7 +396,37 @@ function plainLegal() {
 
 function Links() {
   var Links = convertedBox.value;
-  var RegexNumbers = /((\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$)/g;
+
+  //US/Canada-style numbers: optional +1 country code, optional parens
+  //around the area code, optional separators (or none, for a bare 10-digit
+  //run), and an optional extension ("ext. 123" or "x123").
+  var usPhone =
+    "(?<!\\d)(?:\\+?1[\\s.-]?)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}(?:\\s?(?:ext\\.?|x)\\s?\\d{1,6})?(?!\\d)";
+  //International numbers: + country code followed by 2-5 groups of 2-4 digits,
+  //covering formats like +44 20 7946 0958 or +91 98765 43210.
+  var intlPhone = "(?<!\\d)\\+\\d{1,3}(?:[\\s.-]?\\d{2,4}){2,5}(?!\\d)";
+
+  //Street addresses: house number + street name + a common street-type
+  //suffix, with an optional unit/suite and an optional city, state, ZIP.
+  var streetTypes =
+    "Street|St|Avenue|Ave|Boulevard|Blvd|Drive|Dr|Lane|Ln|Road|Rd|Court|Ct|Circle|Cir|Place|Pl|Square|Sq|Terrace|Ter|Way|Parkway|Pkwy|Highway|Hwy|Trail|Trl|Loop|Crossing|Xing|Point|Pt|Pike|Walk|Path|Plaza|Plz|Alley|Aly|Cove|Cv|Ridge|Rdg";
+  var unit = "(?:,?\\s*(?:Apt|Suite|Ste|Unit|#)\\.?\\s*[\\w-]+)?";
+  //Commas before the city and before the state are both optional, so this
+  //catches "St, Springfield, IL 62704", "St Springfield, IL 62704", and
+  //"St Springfield IL 62704" alike - it only ever applies after a street match.
+  var cityStateZip =
+    "(?:,?\\s*[A-Za-z][A-Za-z.]*(?:\\s+[A-Za-z][A-Za-z.]*)*,?\\s*[A-Z]{2}\\s*\\d{5}(?:-\\d{4})?)?";
+  var address =
+    "(?<!\\d)\\d{1,6}\\s+[A-Za-z0-9.'-]+(?:\\s+[A-Za-z0-9.'-]+){0,3}\\s+(?:" +
+    streetTypes +
+    ")\\.?" +
+    unit +
+    cityStateZip;
+
+  var RegexContactInfo = new RegExp(
+    "(" + intlPhone + "|" + usPhone + "|" + address + ")",
+    "gi"
+  );
 
   //grab input values
   var className = document.getElementById("className");
@@ -352,7 +436,7 @@ function Links() {
   var ColorHexValue = ColorHex.value;
 
   Links = Links.replace(
-    RegexNumbers,
+    RegexContactInfo,
     '<span class="' +
       classNameValue +
       '"><a style="color:#' +

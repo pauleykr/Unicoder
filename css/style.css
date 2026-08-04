@@ -75,6 +75,20 @@ button {
 }
 .inputstyle {
   margin-bottom: 10px;
+  background-color: #0d0d0d;
+  color: #b3b8bc;
+  border: 1px solid #444;
+  border-radius: 3px;
+  padding: 4px 6px;
+}
+.inputstyle:focus {
+  outline: none;
+  border: 1px solid #b3b8bc;
+  box-shadow: 0 0 6px #57e37e;
+}
+.inputstyle::placeholder {
+  color: #6e7378;
+  opacity: 1;
 }
 .hyperlink-hide{
   display: none;
@@ -110,7 +124,7 @@ button {
 }
 .hyperlink-row {
   display: grid;
-  grid-template-columns: 80px 90px;
+  grid-template-columns: 80px 190px;
   align-items: center;
   gap: 6px;
   text-align: left;
@@ -159,4 +173,57 @@ button {
   line-height: 1;
   padding: 2px 10px;
   z-index: 1;
+}
+.tooltip-wrap {
+  position: relative;
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.info-icon {
+  background-color: transparent;
+  border: 1px solid #46bddf;
+  color: #46bddf;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 0.7em;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.tooltip-text {
+  display: none;
+  position: absolute;
+  top: 130%;
+  left: 0;
+  z-index: 10;
+  width: 260px;
+  max-width: calc(100vw - 24px);
+  background: #000000;
+  color: #b3b8bc;
+  border: 1px solid #46bddf;
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 0.8em;
+  line-height: 1.4;
+  box-shadow: 0 0 8px #46bddf;
+}
+.tooltip-wrap:hover .tooltip-text,
+.tooltip-wrap:focus-within .tooltip-text,
+.tooltip-wrap.tooltip-open .tooltip-text {
+  display: block;
+}
+/* JS measures the tooltip against the viewport (positionTooltip) and flips
+   these once it would run off the right edge or the bottom of the screen. */
+.tooltip-wrap.tooltip-align-right .tooltip-text {
+  left: auto;
+  right: 0;
+}
+.tooltip-wrap.tooltip-align-top .tooltip-text {
+  top: auto;
+  bottom: 130%;
 }
