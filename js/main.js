@@ -380,37 +380,52 @@ function isValidHexColor(value) {
   );
 }
 
+//Fixed set of hyperlink slots (rather than an "add another" button) so the
+//number of links processed per convert is always bounded.
+var MAX_HYPERLINKS = 5;
+
 function hyperLink() {
   //Grab main textarea value
   var inputValueTextFinal = convertedBox.value;
+  var invalidColorSlots = [];
 
-  //Grab text value from the input box
-  var hyperLinkText = document.getElementById("hyperLinkText");
-  var inputValue = hyperLinkText.value;
+  for (var i = 1; i <= MAX_HYPERLINKS; i++) {
+    var hyperLinkText = document.getElementById("hyperLinkText" + i);
+    var ColorHex2 = document.getElementById("ColorHex2_" + i);
+    if (!hyperLinkText || !ColorHex2) {
+      continue;
+    }
 
-  //Grab desired color (strip a leading # since it's prepended below)
-  var ColorHex2 = document.getElementById("ColorHex2");
-  var ColorHex2Output = ColorHex2.value.replace(/^#/, "");
+    var inputValue = hyperLinkText.value;
+    //Strip a leading # since it's prepended below
+    var ColorHex2Output = ColorHex2.value.replace(/^#/, "");
+
+    if (ColorHex2Output.length > 0 && !isValidHexColor(ColorHex2Output)) {
+      invalidColorSlots.push(i);
+    }
+
+    //Skip slots with no hyperlink text entered
+    if (inputValue.length > 1) {
+      inputValueTextFinal = inputValueTextFinal.replace(
+        inputValue,
+        '<a href="" style="color:#' +
+          ColorHex2Output +
+          ';text-decoration:none;">' +
+          inputValue +
+          "</a>"
+      );
+    }
+  }
 
   var warningBox = document.getElementById("colorHex2Warning");
   if (warningBox) {
     warningBox.textContent =
-      ColorHex2Output.length > 0 && !isValidHexColor(ColorHex2Output)
-        ? "Hex color is most compatible for email."
+      invalidColorSlots.length > 0
+        ? "Hex color is most compatible for email (link " +
+          invalidColorSlots.join(", ") +
+          ")."
         : "";
   }
 
-  //check if there is a value in hyperlink box if not don't display a tag
-  if (inputValue.length > 1) {
-    inputValueTextFinal = inputValueTextFinal.replace(
-      inputValue,
-      '<a href="" style="color:#' +
-        ColorHex2Output +
-        ';text-decoration:none;">' +
-        inputValue +
-        "</a>"
-    );
-
-    convertedBox.value = inputValueTextFinal;
-  }
+  convertedBox.value = inputValueTextFinal;
 }
