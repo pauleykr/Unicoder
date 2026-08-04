@@ -8,18 +8,10 @@ function copy() {
 
 //Set checkbox options to display
 
-/*Notes 
-Switch to class method. Because the ID is being changed document.getelementbyid is looking for hyperlink-hide but it can no longer find it because it no longer exist because the ID has been changed.
-
-*/
-function showLinkCheckbox(displayId) {
-  var k = document.getElementById("hyperlink-hide");
-  console.log(k.id)
-  if (k.id == "hyperlink-hide") {
-    k.id = "hyperlink-display";
-  } else if (k.id == "hyperlink-display") {
-    k.id = "hyperlink-hide";
-  }
+function showLinkCheckbox(checkbox) {
+  var k = document.getElementById("hyperlinkFields");
+  k.classList.toggle("hyperlink-display", checkbox.checked);
+  k.classList.toggle("hyperlink-hide", !checkbox.checked);
 }
 
 function showunLinkheckbox(displayId) {
