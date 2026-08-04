@@ -44,6 +44,7 @@ var object1 = {
   transform15: NoTransform,
   transform16: removeJunkChars,
   transform17: NoSupLegal,
+  transform18: plainLegal,
 };
 
 //Triggered when user presses the convert button
@@ -169,11 +170,8 @@ var objectSpecialChars = {
   "\u201C": "&ldquo;",
   "\u2013": "&ndash;",
   "\u2014": "&mdash;",
-  "\u2122": "&trade;",
   "\u2022": "&bull;",
   "\u00A6": "&brvbar;",
-  "\u00A9": "&copy;",
-  "\u00AE": "&reg;",
   "\u00B9": "&sup1;",
   "\u00B2": "&sup2;",
   "\u00B3": "&sup3;",
@@ -336,6 +334,16 @@ function spanLegal() {
       '<span style="font-size:70%;line-height:0;vertical-align:3px;">&trade;</span>'
     );
   convertedBox.value = spanLegal;
+}
+
+//Converts legal chars to HTML entities without superscripting them
+function plainLegal() {
+  var plainLegal = convertedBox.value;
+  plainLegal = plainLegal
+    .replace(RegExp("\u00A9", "g"), "&copy;")
+    .replace(RegExp("\u00AE", "g"), "&reg;")
+    .replace(RegExp("\u2122", "g"), "&trade;");
+  convertedBox.value = plainLegal;
 }
 
 function Links() {
