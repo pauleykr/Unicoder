@@ -78,43 +78,80 @@
 						size="20">
 					<span class="row-label">Color 1:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_1" name="ColorHex2_1" maxlength="8" size="20">
+					<span class="underline-row">
+						<input type="radio" id="underline1" name="underlineOption1" value="underline"
+							onchange="updateUnderlineForSlot(1)"><label for="underline1">underline</label>
+						<input type="radio" id="nounderline1" name="underlineOption1" value="none" checked
+							onchange="updateUnderlineForSlot(1)"><label for="nounderline1">no underline</label>
+					</span>
+					<span class="warning-text row-warning" id="colorHex2Warning_1"></span>
 				</li>
 				<li class="hyperlink-row hyperlink-row-hidden" id="hyperlinkRow2">
+					<button type="button" class="remove-btn" onclick="removeHyperlinkRow(2)"
+						title="Remove this link">&minus;</button>
 					<span class="row-label">Link 2:</span>
 					<input type="text" class="inputstyle" id="hyperLinkText2" name="hyperLinkText2" maxlength="8"
 						size="20">
 					<span class="row-label">Color 2:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_2" name="ColorHex2_2" maxlength="8" size="20">
+					<span class="underline-row">
+						<input type="radio" id="underline2" name="underlineOption2" value="underline"
+							onchange="updateUnderlineForSlot(2)"><label for="underline2">underline</label>
+						<input type="radio" id="nounderline2" name="underlineOption2" value="none" checked
+							onchange="updateUnderlineForSlot(2)"><label for="nounderline2">no underline</label>
+					</span>
+					<span class="warning-text row-warning" id="colorHex2Warning_2"></span>
 				</li>
 				<li class="hyperlink-row hyperlink-row-hidden" id="hyperlinkRow3">
+					<button type="button" class="remove-btn" onclick="removeHyperlinkRow(3)"
+						title="Remove this link">&minus;</button>
 					<span class="row-label">Link 3:</span>
 					<input type="text" class="inputstyle" id="hyperLinkText3" name="hyperLinkText3" maxlength="8"
 						size="20">
 					<span class="row-label">Color 3:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_3" name="ColorHex2_3" maxlength="8" size="20">
+					<span class="underline-row">
+						<input type="radio" id="underline3" name="underlineOption3" value="underline"
+							onchange="updateUnderlineForSlot(3)"><label for="underline3">underline</label>
+						<input type="radio" id="nounderline3" name="underlineOption3" value="none" checked
+							onchange="updateUnderlineForSlot(3)"><label for="nounderline3">no underline</label>
+					</span>
+					<span class="warning-text row-warning" id="colorHex2Warning_3"></span>
 				</li>
 				<li class="hyperlink-row hyperlink-row-hidden" id="hyperlinkRow4">
+					<button type="button" class="remove-btn" onclick="removeHyperlinkRow(4)"
+						title="Remove this link">&minus;</button>
 					<span class="row-label">Link 4:</span>
 					<input type="text" class="inputstyle" id="hyperLinkText4" name="hyperLinkText4" maxlength="8"
 						size="20">
 					<span class="row-label">Color 4:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_4" name="ColorHex2_4" maxlength="8" size="20">
+					<span class="underline-row">
+						<input type="radio" id="underline4" name="underlineOption4" value="underline"
+							onchange="updateUnderlineForSlot(4)"><label for="underline4">underline</label>
+						<input type="radio" id="nounderline4" name="underlineOption4" value="none" checked
+							onchange="updateUnderlineForSlot(4)"><label for="nounderline4">no underline</label>
+					</span>
+					<span class="warning-text row-warning" id="colorHex2Warning_4"></span>
 				</li>
 				<li class="hyperlink-row hyperlink-row-hidden" id="hyperlinkRow5">
+					<button type="button" class="remove-btn" onclick="removeHyperlinkRow(5)"
+						title="Remove this link">&minus;</button>
 					<span class="row-label">Link 5:</span>
 					<input type="text" class="inputstyle" id="hyperLinkText5" name="hyperLinkText5" maxlength="8"
 						size="20">
 					<span class="row-label">Color 5:</span>
 					<input type="text" class="inputstyle" id="ColorHex2_5" name="ColorHex2_5" maxlength="8" size="20">
+					<span class="underline-row">
+						<input type="radio" id="underline5" name="underlineOption5" value="underline"
+							onchange="updateUnderlineForSlot(5)"><label for="underline5">underline</label>
+						<input type="radio" id="nounderline5" name="underlineOption5" value="none" checked
+							onchange="updateUnderlineForSlot(5)"><label for="nounderline5">no underline</label>
+					</span>
+					<span class="warning-text row-warning" id="colorHex2Warning_5"></span>
 				</li>
 				<li><button type="button" id="addHyperlinkBtn" class="add-btn" onclick="addHyperlinkRow()"
 						title="Add another link (up to 5)">+</button></li>
-				<li id="colorHex2Warning" class="warning-text"></li>
-				Select whether to underline or not
-				<input type="radio" id="transform13" name="transform13" value="transform13"><label
-					for="transform13">underline</label></li>
-				<li><input type="radio" id="transform14" name="transform14" value="transform14" checked><label
-						for="transform14">no undeline</label></li>
 			</ul>
 		</ul>
 

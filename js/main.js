@@ -49,10 +49,7 @@ function ConversionTrigger() {
     reportBox.textContent = "";
   }
 
-  var warningBox = document.getElementById("colorHex2Warning");
-  if (warningBox) {
-    warningBox.textContent = "";
-  }
+  clearAllColorHex2Warnings();
 
   checked.forEach((optId) => {
     //object1['transform1']()
@@ -372,6 +369,31 @@ function isValidHexColor(value) {
   );
 }
 
+function clearAllColorHex2Warnings() {
+  for (var i = 1; i <= MAX_HYPERLINKS; i++) {
+    var warningBox = document.getElementById("colorHex2Warning_" + i);
+    if (warningBox) {
+      warningBox.textContent = "";
+    }
+  }
+}
+
+//Validates a single hyperlink color slot and shows/clears its own warning,
+//so feedback appears right under that color box once the user is done typing.
+function validateColorHex2Slot(i) {
+  var ColorHex2 = document.getElementById("ColorHex2_" + i);
+  var warningBox = document.getElementById("colorHex2Warning_" + i);
+  if (!ColorHex2 || !warningBox) {
+    return;
+  }
+
+  var ColorHex2Output = ColorHex2.value.replace(/^#/, "");
+  warningBox.textContent =
+    ColorHex2Output.length > 0 && !isValidHexColor(ColorHex2Output)
+      ? "Hex color is most compatible for email."
+      : "";
+}
+
 //Fixed set of 5 hyperlink slots already exist in the DOM (rows 2-5 start
 //hidden); the "+" button just reveals the next one rather than creating new
 //elements, so the number of links processed per convert stays bounded.
@@ -397,10 +419,51 @@ function addHyperlinkRow() {
   }
 }
 
+//Hides slot i (2-5), clears its fields, and reopens it as the next slot the
+//"+" button will reveal, since removing a middle link shouldn't strand the
+//add button in its "all slots used" hidden state.
+function removeHyperlinkRow(i) {
+  var row = document.getElementById("hyperlinkRow" + i);
+  if (!row) {
+    return;
+  }
+  row.classList.add("hyperlink-row-hidden");
+
+  var hyperLinkText = document.getElementById("hyperLinkText" + i);
+  var ColorHex2 = document.getElementById("ColorHex2_" + i);
+  if (hyperLinkText) {
+    hyperLinkText.value = "";
+  }
+  if (ColorHex2) {
+    ColorHex2.value = "";
+  }
+  var warningBox = document.getElementById("colorHex2Warning_" + i);
+  if (warningBox) {
+    warningBox.textContent = "";
+  }
+  var noUnderlineRadio = document.getElementById("nounderline" + i);
+  if (noUnderlineRadio) {
+    noUnderlineRadio.checked = true;
+  }
+
+  if (i < nextHyperlinkSlot) {
+    nextHyperlinkSlot = i;
+  }
+  var addBtn = document.getElementById("addHyperlinkBtn");
+  if (addBtn) {
+    addBtn.style.display = "";
+  }
+}
+
+//Each link row has its own underline/no-underline radio pair (underlineOption1..5)
+function getUnderlineChoice(i) {
+  var underlineRadio = document.getElementById("underline" + i);
+  return underlineRadio && underlineRadio.checked ? "underline" : "none";
+}
+
 function hyperLink() {
   //Grab main textarea value
   var inputValueTextFinal = convertedBox.value;
-  var invalidColorSlots = [];
 
   for (var i = 1; i <= MAX_HYPERLINKS; i++) {
     var hyperLinkText = document.getElementById("hyperLinkText" + i);
@@ -413,9 +476,7 @@ function hyperLink() {
     //Strip a leading # since it's prepended below
     var ColorHex2Output = ColorHex2.value.replace(/^#/, "");
 
-    if (ColorHex2Output.length > 0 && !isValidHexColor(ColorHex2Output)) {
-      invalidColorSlots.push(i);
-    }
+    validateColorHex2Slot(i);
 
     //Skip slots with no hyperlink text entered
     if (inputValue.length > 1) {
@@ -423,22 +484,62 @@ function hyperLink() {
         inputValue,
         '<a href="" style="color:#' +
           ColorHex2Output +
-          ';text-decoration:none;">' +
+          ';text-decoration:' +
+          getUnderlineChoice(i) +
+          ';">' +
           inputValue +
           "</a>"
       );
     }
   }
 
-  var warningBox = document.getElementById("colorHex2Warning");
-  if (warningBox) {
-    warningBox.textContent =
-      invalidColorSlots.length > 0
-        ? "Hex color is most compatible for email (link " +
-          invalidColorSlots.join(", ") +
-          ")."
-        : "";
+  convertedBox.value = inputValueTextFinal;
+}
+
+//Escapes regex special characters so a link's raw text can be used inside a RegExp
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+//If slot i has already been converted into an <a> tag in the output, flip its
+//text-decoration in place - lets the underline choice update live without
+//requiring the user to press Convert again.
+function updateUnderlineForSlot(i) {
+  var hyperLinkText = document.getElementById("hyperLinkText" + i);
+  var ColorHex2 = document.getElementById("ColorHex2_" + i);
+  if (!hyperLinkText || !ColorHex2) {
+    return;
   }
 
-  convertedBox.value = inputValueTextFinal;
+  var inputValue = hyperLinkText.value;
+  if (inputValue.length <= 1) {
+    return;
+  }
+
+  var ColorHex2Output = ColorHex2.value.replace(/^#/, "");
+  var pattern = new RegExp(
+    '(<a href="" style="color:#' +
+      ColorHex2Output +
+      ';text-decoration:)(none|underline)(;">' +
+      escapeRegExp(inputValue) +
+      "</a>)"
+  );
+
+  convertedBox.value = convertedBox.value.replace(
+    pattern,
+    "$1" + getUnderlineChoice(i) + "$3"
+  );
+}
+
+//Validate each hyperlink color box on blur, so the warning shows up as soon
+//as the user finishes typing rather than only after pressing Convert.
+for (var hexSlot = 1; hexSlot <= MAX_HYPERLINKS; hexSlot++) {
+  (function (slot) {
+    var input = document.getElementById("ColorHex2_" + slot);
+    if (input) {
+      input.addEventListener("blur", function () {
+        validateColorHex2Slot(slot);
+      });
+    }
+  })(hexSlot);
 }
