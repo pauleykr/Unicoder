@@ -48,6 +48,7 @@ var object1 = {
 //Triggered when user presses the convert button
 function ConversionTrigger() {
   var checked = check();
+  checked = orderTransforms(checked);
 
   var reportBox = document.getElementById("junkReport");
   if (reportBox) {
@@ -59,6 +60,18 @@ function ConversionTrigger() {
     console.log("optId = ", optId);
     object1[optId]();
   });
+}
+
+//"Add <br>" must run before "Strip Line Returns" when both are checked -
+//both act on \n, so stripping first leaves nothing for addlineReturn to convert.
+function orderTransforms(checked) {
+  var brIdx = checked.indexOf("transform9");
+  var stripIdx = checked.indexOf("transform8");
+  if (brIdx !== -1 && stripIdx !== -1 && brIdx > stripIdx) {
+    checked.splice(brIdx, 1);
+    checked.splice(stripIdx, 0, "transform9");
+  }
+  return checked;
 }
 
 //Grab all checkboxs and radio buttons
