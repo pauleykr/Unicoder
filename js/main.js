@@ -14,9 +14,10 @@ function showLinkCheckbox(checkbox) {
   k.classList.toggle("hyperlink-hide", !checkbox.checked);
 }
 
-function showunLinkheckbox(displayId) {
-  var k = document.getElementById("unlink-hide");
-  k.id = "unlink-display";
+function showunLinkheckbox(checkbox) {
+  var k = document.getElementById("unlinkFields");
+  k.classList.toggle("hyperlink-display", checkbox.checked);
+  k.classList.toggle("hyperlink-hide", !checkbox.checked);
 }
 
 //Tooltip icons: click/tap toggles the bubble open (hover still works via CSS,

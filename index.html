@@ -60,7 +60,7 @@
 		<ul>
 			<h4>Text Markups</h4>
 
-			<li><input onclick="showunLinkheckbox('unlink-hide')" type="checkbox" id="transform11" name="transform11"
+			<li><input onclick="showunLinkheckbox(this)" type="checkbox" id="transform11" name="transform11"
 					value="links"><label for="transform11">Prevent client auto-linking for
 					address/telephone</label>
 				<span class="tooltip-wrap">
@@ -72,9 +72,9 @@
 						This wraps them in a styled span/link instead so the client won't auto-link them.</span>
 				</span>
 			</li>
-			<ul id="unlink-hide">
+			<ul id="unlinkFields" class="hyperlink-hide">
 				<li>Class: <input type="text" class="inputstyle" id="className" name="className" required maxlength="8"
-						size="20">
+						size="20" placeholder="MyEmailOverride">
 					<span class="tooltip-wrap">
 						<button type="button" class="info-icon" aria-label="What is this class for?"
 							aria-describedby="classNameTooltip" aria-expanded="false" onclick="toggleTooltip(this)">i</button>
@@ -85,7 +85,7 @@
 					</span>
 				</li>
 				<li>Color: <input type="text" class="inputstyle" id="ColorHex" name="ColorHex" required maxlength="8"
-						size="20"></li>
+						size="20" placeholder="Example, #ffffff"></li>
 			</ul>
 			<li><input onclick="showLinkCheckbox(this)" type="checkbox" id="transform12" name="transform12"
 					value="Hyperlink"><label for="transform12">Select Text to Link</label>
@@ -105,7 +105,7 @@
 					<input type="text" class="inputstyle" id="hyperLinkText1" name="hyperLinkText1" maxlength="8"
 						size="20" placeholder="text being linked">
 					<span class="row-label">Color 1:</span>
-					<input type="text" class="inputstyle" id="ColorHex2_1" name="ColorHex2_1" maxlength="8" size="20">
+					<input type="text" class="inputstyle" id="ColorHex2_1" name="ColorHex2_1" maxlength="8" size="20" placeholder="Example, #ffffff">
 					<span class="underline-row">
 						<input type="radio" id="underline1" name="underlineOption1" value="underline"
 							onchange="updateUnderlineForSlot(1)"><label for="underline1">underline</label>
@@ -121,7 +121,7 @@
 					<input type="text" class="inputstyle" id="hyperLinkText2" name="hyperLinkText2" maxlength="8"
 						size="20" placeholder="text being linked">
 					<span class="row-label">Color 2:</span>
-					<input type="text" class="inputstyle" id="ColorHex2_2" name="ColorHex2_2" maxlength="8" size="20">
+					<input type="text" class="inputstyle" id="ColorHex2_2" name="ColorHex2_2" maxlength="8" size="20" placeholder="Example, #ffffff">
 					<span class="underline-row">
 						<input type="radio" id="underline2" name="underlineOption2" value="underline"
 							onchange="updateUnderlineForSlot(2)"><label for="underline2">underline</label>
@@ -137,7 +137,7 @@
 					<input type="text" class="inputstyle" id="hyperLinkText3" name="hyperLinkText3" maxlength="8"
 						size="20" placeholder="text being linked">
 					<span class="row-label">Color 3:</span>
-					<input type="text" class="inputstyle" id="ColorHex2_3" name="ColorHex2_3" maxlength="8" size="20">
+					<input type="text" class="inputstyle" id="ColorHex2_3" name="ColorHex2_3" maxlength="8" size="20" placeholder="Example, #ffffff">
 					<span class="underline-row">
 						<input type="radio" id="underline3" name="underlineOption3" value="underline"
 							onchange="updateUnderlineForSlot(3)"><label for="underline3">underline</label>
@@ -153,7 +153,7 @@
 					<input type="text" class="inputstyle" id="hyperLinkText4" name="hyperLinkText4" maxlength="8"
 						size="20" placeholder="text being linked">
 					<span class="row-label">Color 4:</span>
-					<input type="text" class="inputstyle" id="ColorHex2_4" name="ColorHex2_4" maxlength="8" size="20">
+					<input type="text" class="inputstyle" id="ColorHex2_4" name="ColorHex2_4" maxlength="8" size="20" placeholder="Example, #ffffff">
 					<span class="underline-row">
 						<input type="radio" id="underline4" name="underlineOption4" value="underline"
 							onchange="updateUnderlineForSlot(4)"><label for="underline4">underline</label>
@@ -169,7 +169,7 @@
 					<input type="text" class="inputstyle" id="hyperLinkText5" name="hyperLinkText5" maxlength="8"
 						size="20" placeholder="text being linked">
 					<span class="row-label">Color 5:</span>
-					<input type="text" class="inputstyle" id="ColorHex2_5" name="ColorHex2_5" maxlength="8" size="20">
+					<input type="text" class="inputstyle" id="ColorHex2_5" name="ColorHex2_5" maxlength="8" size="20" placeholder="Example, #ffffff">
 					<span class="underline-row">
 						<input type="radio" id="underline5" name="underlineOption5" value="underline"
 							onchange="updateUnderlineForSlot(5)"><label for="underline5">underline</label>
