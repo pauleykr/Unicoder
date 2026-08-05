@@ -698,3 +698,113 @@ for (var hexSlot = 1; hexSlot <= MAX_HYPERLINKS; hexSlot++) {
     }
   })(hexSlot);
 }
+
+//Mobile bottom sheet: below the CSS breakpoint, .containerR becomes a
+//draggable sheet opened by the fixed "Transform Text" bar. Each option
+//group's existing <ul> collapses independently off its own <h4> - there's
+//no wizard step order, so any combination of groups can stay open at once.
+(function () {
+  var containerR = document.getElementById("containerR");
+  var scrim = document.getElementById("sheetScrim");
+  var mobileTransformBtn = document.getElementById("mobileTransformBtn");
+  var sheetClose = document.getElementById("sheetClose");
+  var sheetApply = document.getElementById("sheetApply");
+  var sheetReset = document.getElementById("sheetReset");
+  var dragHandle = document.getElementById("dragHandle");
+
+  if (!containerR || !mobileTransformBtn) {
+    return;
+  }
+
+  function openSheet() {
+    containerR.classList.add("sheet-open");
+    scrim.classList.add("open");
+    sheetClose.focus();
+  }
+  function closeSheet() {
+    containerR.classList.remove("sheet-open");
+    scrim.classList.remove("open");
+    mobileTransformBtn.focus();
+  }
+
+  mobileTransformBtn.addEventListener("click", openSheet);
+  sheetClose.addEventListener("click", closeSheet);
+  scrim.addEventListener("click", closeSheet);
+
+  document.querySelectorAll("h4.group-head").forEach(function (head) {
+    function toggle() {
+      var group = head.closest("ul");
+      var collapsed = group.classList.toggle("collapsed");
+      head.setAttribute("aria-expanded", !collapsed);
+    }
+    head.addEventListener("click", toggle);
+    head.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggle();
+      }
+    });
+  });
+
+  //Apply runs the real ConversionTrigger() used by the desktop Convert
+  //button, then closes the sheet so the result is visible underneath.
+  window.applyFromSheet = function () {
+    ConversionTrigger();
+    closeSheet();
+  };
+
+  sheetReset.addEventListener("click", function () {
+    document
+      .querySelectorAll("#containerR input[type='checkbox']:not(.select-all)")
+      .forEach(function (cb) {
+        cb.checked = false;
+        cb.dispatchEvent(new Event("change"));
+        //Mirrors setupCheckAllSections' own cascade so unlink/hyperlink
+        //field visibility (wired via onclick, not change) resets too.
+        if (typeof cb.onclick === "function") {
+          cb.onclick();
+        }
+      });
+    var noChange = document.getElementById("transform15");
+    var noSup = document.getElementById("transform17");
+    if (noChange) {
+      noChange.checked = true;
+    }
+    if (noSup) {
+      noSup.checked = true;
+    }
+  });
+
+  //Drag the handle to dismiss, matching the native iOS/Android sheet gesture.
+  var dragStartY = 0;
+  var dragging = false;
+
+  function onPointerDown(event) {
+    dragging = true;
+    dragStartY = event.clientY;
+    containerR.classList.add("dragging");
+  }
+  function onPointerMove(event) {
+    if (!dragging) {
+      return;
+    }
+    var delta = Math.max(0, event.clientY - dragStartY);
+    containerR.style.transform = "translateY(" + delta + "px)";
+  }
+  function onPointerUp(event) {
+    if (!dragging) {
+      return;
+    }
+    dragging = false;
+    containerR.classList.remove("dragging");
+    var delta = Math.max(0, event.clientY - dragStartY);
+    containerR.style.transform = "";
+    if (delta > 110) {
+      closeSheet();
+    }
+  }
+
+  dragHandle.addEventListener("pointerdown", onPointerDown);
+  window.addEventListener("pointermove", onPointerMove);
+  window.addEventListener("pointerup", onPointerUp);
+})();

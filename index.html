@@ -9,7 +9,7 @@
 <body>
 	<div class="actions">
 		<div>
-			<button type="button" onclick="ConversionTrigger()">Convert</button>
+			<button type="button" id="convertBtn" onclick="ConversionTrigger()">Convert</button>
 			<button type="button" onclick="copy()">Copy</button>
 		</div>
 		<div class="brand">Unicoder<img src="images/icon_Uni.png" alt="icon"></div>
@@ -19,9 +19,16 @@
 		<textarea type="text" id="ConvertedText"></textarea>
 		<div id="junkReport"></div>
 	</div>
-	<div class="containerR">
-		<ul>
-			<h4>Text Casing</h4>
+	<div class="containerR" id="containerR">
+		<div class="sheet-chrome">
+			<div class="sheet-handle-wrap" id="dragHandle"><div class="sheet-handle"></div></div>
+			<div class="sheet-head">
+				<p class="sheet-eyebrow">Transform Options</p>
+				<button type="button" class="sheet-close" id="sheetClose" aria-label="Close">&times;</button>
+			</div>
+		</div>
+		<ul class="opt-group">
+			<h4 class="group-head" tabindex="0" role="button" aria-expanded="true">Text Casing<span class="chev"></span></h4>
 			<li><input type="radio" id="transform1" name="transform" value="lowerCase"><label
 					for="transform1">lowerCase</label></li>
 			<li><input type="radio" id="transform2" name="transform" value="upperCase"><label
@@ -31,8 +38,8 @@
 			<li><input type="radio" id="transform15" name="transform" value="NoTransform" checked><label
 					for="transform15">No Change</label></li>
 		</ul>
-		<ul>
-			<h4>Unicode to HTML</h4>
+		<ul class="opt-group collapsed">
+			<h4 class="group-head" tabindex="0" role="button" aria-expanded="false">Unicode to HTML<span class="chev"></span></h4>
 			<li class="select-all-row"><input type="checkbox" id="selectAllUnicode" class="select-all"><label
 					for="selectAllUnicode">Check All</label></li>
 			<li><input type="checkbox" id="transform4" name="transform4" value="MSO"><label for="transform4">Straighten
@@ -44,8 +51,8 @@
 			<li><input type="checkbox" id="transform9" name="transform9" value="RemoveLn"><label for="transform9">Add
 					&lt;br&gt;</label></li>
 		</ul>
-		<ul>
-			<h4>Superscript Legal Chars</h4>
+		<ul class="opt-group collapsed">
+			<h4 class="group-head" tabindex="0" role="button" aria-expanded="false">Superscript Legal Chars<span class="chev"></span></h4>
 			<li><input type="radio" id="transform17" name="supLegalFormat" value="none" checked><label
 					for="transform17">N/A</label></li>
 			<li><input type="radio" id="transform6" name="supLegalFormat" value="Infringment"><label
@@ -56,8 +63,8 @@
 					Superscript (plain entity)</label></li>
 		</ul>
 
-		<ul>
-			<h4>Clean Up</h4>
+		<ul class="opt-group collapsed">
+			<h4 class="group-head" tabindex="0" role="button" aria-expanded="false">Clean Up<span class="chev"></span></h4>
 			<li class="select-all-row"><input type="checkbox" id="selectAllCleanup" class="select-all"><label
 					for="selectAllCleanup">Check All</label></li>
 			<li><input type="checkbox" id="transform16" name="transform16" value="junk"><label for="transform16">Remove
@@ -65,8 +72,8 @@
 			<li><input type="checkbox" id="transform8" name="transform8" value="RemoveLn"><label for="transform8">Strip
 					Line Returns</label></li>
 		</ul>
-		<ul>
-			<h4>Text Markups</h4>
+		<ul class="opt-group collapsed">
+			<h4 class="group-head" tabindex="0" role="button" aria-expanded="false">Text Markups<span class="chev"></span></h4>
 			<li class="select-all-row"><input type="checkbox" id="selectAllMarkups" class="select-all"><label
 					for="selectAllMarkups">Check All</label></li>
 
@@ -201,7 +208,15 @@
 						title="Add another link (up to 5)">+</button></li>
 			</ul>
 		</ul>
+		<div class="sheet-foot">
+			<button type="button" class="btn-ghost" id="sheetReset">Reset</button>
+			<button type="button" class="btn-primary" id="sheetApply" onclick="applyFromSheet()">Apply</button>
+		</div>
 
+	</div>
+	<div class="sheet-scrim" id="sheetScrim"></div>
+	<div class="mobile-transform-bar">
+		<button type="button" id="mobileTransformBtn" class="btn-primary">Transform Text</button>
 	</div>
 </body>
 <script src="js/main.js"></script>
