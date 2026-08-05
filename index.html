@@ -7,15 +7,19 @@
 </head>
 
 <body>
-	<h1><img src="images/icon_Uni.png" class="icon" alt="icon" width="70" height="auto">Unicoder</h1>
+	<div class="actions">
+		<div>
+			<button type="button" onclick="ConversionTrigger()">Convert</button>
+			<button type="button" onclick="copy()">Copy</button>
+		</div>
+		<div class="brand">Unicoder<img src="images/icon_Uni.png" alt="icon"></div>
+	</div>
 	<div class="containerL">
 		<textarea type="text" id="OriginalText"></textarea>
 		<textarea type="text" id="ConvertedText"></textarea>
 		<div id="junkReport"></div>
 	</div>
 	<div class="containerR">
-		<button type="button" onclick="ConversionTrigger()">Convert</button>
-		<button type="button" onclick="copy()">Copy</button>
 		<ul>
 			<h4>Text Casing</h4>
 			<li><input type="radio" id="transform1" name="transform" value="lowerCase"><label
@@ -29,6 +33,8 @@
 		</ul>
 		<ul>
 			<h4>Unicode to HTML</h4>
+			<li class="select-all-row"><input type="checkbox" id="selectAllUnicode" class="select-all"><label
+					for="selectAllUnicode">Check All</label></li>
 			<li><input type="checkbox" id="transform4" name="transform4" value="MSO"><label for="transform4">Straighten
 					MSO</label></li>
 			<li><input type="checkbox" id="transform5" name="transform5" value="spanishChar"><label
@@ -52,6 +58,8 @@
 
 		<ul>
 			<h4>Clean Up</h4>
+			<li class="select-all-row"><input type="checkbox" id="selectAllCleanup" class="select-all"><label
+					for="selectAllCleanup">Check All</label></li>
 			<li><input type="checkbox" id="transform16" name="transform16" value="junk"><label for="transform16">Remove
 					Junk Characters</label></li>
 			<li><input type="checkbox" id="transform8" name="transform8" value="RemoveLn"><label for="transform8">Strip
@@ -59,6 +67,8 @@
 		</ul>
 		<ul>
 			<h4>Text Markups</h4>
+			<li class="select-all-row"><input type="checkbox" id="selectAllMarkups" class="select-all"><label
+					for="selectAllMarkups">Check All</label></li>
 
 			<li><input onclick="showunLinkheckbox(this)" type="checkbox" id="transform11" name="transform11"
 					value="links"><label for="transform11">Prevent client auto-linking for
@@ -73,7 +83,7 @@
 				</span>
 			</li>
 			<ul id="unlinkFields" class="hyperlink-hide">
-				<li>Class: <input type="text" class="inputstyle" id="className" name="className" required maxlength="8"
+				<li>Class: <input type="text" class="inputstyle" id="className" name="className" required maxlength="50"
 						size="20" placeholder="MyEmailOverride">
 					<span class="tooltip-wrap">
 						<button type="button" class="info-icon" aria-label="What is this class for?"
@@ -85,7 +95,9 @@
 					</span>
 				</li>
 				<li>Color: <input type="text" class="inputstyle" id="ColorHex" name="ColorHex" required maxlength="8"
-						size="20" placeholder="Example, #ffffff"></li>
+						size="20" placeholder="Example, #ffffff">
+					<span class="warning-text" id="colorHexWarning"></span>
+				</li>
 			</ul>
 			<li><input onclick="showLinkCheckbox(this)" type="checkbox" id="transform12" name="transform12"
 					value="Hyperlink"><label for="transform12">Select Text to Link</label>

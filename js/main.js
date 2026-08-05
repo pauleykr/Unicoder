@@ -20,6 +20,44 @@ function showunLinkheckbox(checkbox) {
   k.classList.toggle("hyperlink-hide", !checkbox.checked);
 }
 
+//Each ".select-all" checkbox toggles every other checkbox in its enclosing
+//<ul>; member checkboxes' own onclick (eg. showunLinkheckbox) still fires so
+//their dependent fields stay in sync. The master also reflects manual
+//per-checkbox changes, checking itself only once every member is checked.
+function setupCheckAllSections() {
+  document.querySelectorAll(".select-all").forEach(function (master) {
+    var container = master.closest("ul");
+    if (!container) {
+      return;
+    }
+    var members = Array.prototype.slice
+      .call(container.querySelectorAll('input[type="checkbox"]'))
+      .filter(function (cb) {
+        return cb !== master;
+      });
+
+    master.addEventListener("change", function () {
+      members.forEach(function (cb) {
+        if (cb.checked !== master.checked) {
+          cb.checked = master.checked;
+          if (typeof cb.onclick === "function") {
+            cb.onclick();
+          }
+        }
+      });
+    });
+
+    members.forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        master.checked = members.every(function (member) {
+          return member.checked;
+        });
+      });
+    });
+  });
+}
+setupCheckAllSections();
+
 //Tooltip icons: click/tap toggles the bubble open (hover still works via CSS,
 //this is what makes it reachable on touch devices and via keyboard).
 function toggleTooltip(button) {
@@ -104,7 +142,7 @@ function ConversionTrigger() {
     reportBox.textContent = "";
   }
 
-  clearAllColorHex2Warnings();
+  clearAllColorWarnings();
 
   checked.forEach((optId) => {
     //object1['transform1']()
@@ -363,7 +401,7 @@ function RemoveSpace() {
 
 function addlineReturn() {
   var RemoveSpace = convertedBox.value;
-  RemoveSpace = RemoveSpace.replace(RegExp("\n", "g"), "<br>");
+  RemoveSpace = RemoveSpace.replace(RegExp("\n", "g"), "<br>\n");
 
   convertedBox.value = RemoveSpace;
 }
@@ -436,6 +474,8 @@ function Links() {
   var classNameValue = className.value;
   var ColorHexValue = ColorHex.value;
 
+  validateColorHex();
+
   Links = Links.replace(
     RegexContactInfo,
     '<span class="' +
@@ -454,13 +494,34 @@ function isValidHexColor(value) {
   );
 }
 
-function clearAllColorHex2Warnings() {
+function clearAllColorWarnings() {
+  var colorHexWarning = document.getElementById("colorHexWarning");
+  if (colorHexWarning) {
+    colorHexWarning.textContent = "";
+  }
   for (var i = 1; i <= MAX_HYPERLINKS; i++) {
     var warningBox = document.getElementById("colorHex2Warning_" + i);
     if (warningBox) {
       warningBox.textContent = "";
     }
   }
+}
+
+//Validates the auto-link prevention's Color field and shows/clears its own
+//warning, so feedback appears right under that color box once the user is
+//done typing.
+function validateColorHex() {
+  var ColorHex = document.getElementById("ColorHex");
+  var warningBox = document.getElementById("colorHexWarning");
+  if (!ColorHex || !warningBox) {
+    return;
+  }
+
+  var ColorHexOutput = ColorHex.value.replace(/^#/, "");
+  warningBox.textContent =
+    ColorHexOutput.length > 0 && !isValidHexColor(ColorHexOutput)
+      ? "Hex color is most compatible for email."
+      : "";
 }
 
 //Validates a single hyperlink color slot and shows/clears its own warning,
@@ -614,6 +675,13 @@ function updateUnderlineForSlot(i) {
     pattern,
     "$1" + getUnderlineChoice(i) + "$3"
   );
+}
+
+//Validate the auto-link prevention's Color box on blur, so the warning shows
+//up as soon as the user finishes typing rather than only after pressing Convert.
+var colorHexInput = document.getElementById("ColorHex");
+if (colorHexInput) {
+  colorHexInput.addEventListener("blur", validateColorHex);
 }
 
 //Validate each hyperlink color box on blur, so the warning shows up as soon

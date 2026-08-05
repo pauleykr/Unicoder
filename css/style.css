@@ -14,16 +14,18 @@ body {
   background: #57e37e; /* Gecko Browsers */
   color: #000000;
 }
-.icon {
-  padding-right: 12px;
-}
-h1 {
+.brand {
   display: flex;
   align-items: center;
   color: #57e37e;
-  padding: 20px 0 0 0;
-  font-size: 40px;
+  font-size: 22px;
+  font-weight: 700;
   font-family: Arial, Helvetica, sans-serif;
+}
+.brand img {
+  width: 30px;
+  height: auto;
+  margin-left: 10px;
 }
 h4 {
   color: #46bddf;
@@ -46,6 +48,12 @@ ul {
   padding: 20px 0px 0px 0px;
   margin: 0px;
   list-style-type: none;
+}
+.select-all-row {
+  font-style: italic;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #444;
 }
 
 textarea {
@@ -150,6 +158,17 @@ input[type="radio"]:focus {
   color: #57e37e;
   font-size: 0.85em;
   min-height: 1.2em;
+}
+.actions {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #000000;
+  padding: 10px 6% 10px 0;
+  border-bottom: 1px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .warning-text {
   color: #ffb347;
