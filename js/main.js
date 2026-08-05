@@ -165,7 +165,9 @@ function orderTransforms(checked) {
 
 //Grab all checkboxs and radio buttons
 function check() {
-  var boxCheck = document.querySelectorAll("input[type='checkbox']");
+  var boxCheck = document.querySelectorAll(
+    "input[type='checkbox']:not(.select-all)"
+  );
   var radioCheck = document.querySelectorAll(
     "input[type='radio'][name='transform'], input[type='radio'][name='supLegalFormat']"
   );
